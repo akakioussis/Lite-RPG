@@ -1,0 +1,10 @@
+    var randomName = faker.name.findName(); // Caitlyn Kerluke
+    var randomEmail = faker.internet.email(); // Rusty@arne.info
+    var randomCard = faker.helpers.createCard(); // random contact card containing many properties]
+
+    var itemsboy = document.querySelector(".items");
+    var boy = document.querySelector(".boy");
+    alert("EJEhe");
+
+    var eh = console.log("hey");
+    var peepee = console.log("whatsup fatlip");
