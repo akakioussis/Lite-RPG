@@ -1,2 +1,2 @@
-#Chardomizer
-A randomizer for Character-Name and Character-Description.
+#Lite-RPG
+A webpage Lite-RPG
