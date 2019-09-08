@@ -1,5 +1,5 @@
-function Occupation(name, xp) {
-    this.name = name;
+function Level(level, xp) {
+    this.level = level;
     this.xp = xp;
 }
 
@@ -17,12 +17,19 @@ function ArmorRating(ArmorRating) {
     this.ArmorRating = ArmorRating;
 }
 
-function Person() {
-    this.name = faker.name.findName();
-    this.occupation = new Occupation("Unemployed");
+function Generator(name, requirement) {
+    this.name = name;
+    this.requirement = requirement;
+}
 
-    this.setOccupation = function (occupation, xp) {
-        this.occupation = occupation;
+function Person() {
+    this.name = "You";
+    this.level = new Level("Unleveled", 0);
+    this.clothing = new Clothing("Rags", 0);
+    this.quality = new Quality("Broken", 0);
+
+    this.setLevel = function (level, xp) {
+        this.level = level;
         this.xp = xp;
     };
 
@@ -43,57 +50,86 @@ function Person() {
 }
 
 /* Other stuff */
-const occupations = [new Occupation("Rookie", 5), new Occupation("Survivor", 10), new Occupation("Legend", 15)];
+const levels = [new Level("Rookie", 5), new Level("Survivor", 10), new Level("Legend", 15)];
 const clothes = [new Clothing("Leather Armor", 15), new Clothing("Copper Armor", 20), new Clothing("Iron Armor", 25), new Clothing("Steel Plate Armor", 30), new Clothing("Elven Armor", 35), new Clothing("Magma Set", 40)];
 const quality = [new Quality("Poorly-Made", -10), new Quality("Common", 20), new Quality("Well-Made", 30), new Quality("Masterwork", 50), new Quality("Legendary", 80)];
+const generators = [new Generator("Lame Generator", 15)];
 
-function getRandom(array) {
-    return array[Math.floor(Math.random() * array.length)];
-}
+let person = new Person();
 
-function generatePerson() {
-    let person = new Person();
 
-    person.setOccupation(getRandom(occupations));
-    person.setClothes(getRandom(clothes));
-    person.setQuality(getRandom(quality));
-    person.setArmorRating(person.clothes.baseValue + person.quality.modifierValue);
 
-    console.log(person.ArmorRating);
-    console.log(person.clothes.baseValue + person.quality.modifierValue);
-    console.log(person);
-
-    return person;
-}
 
 function displayPerson(person) {
-    document.querySelector(".charname").textContent = "Name: " + person.name;
-    document.querySelector(".charrank").textContent = "Rank: " + person.occupation.name;
-    document.querySelector(".chararmor").textContent = "Equipped: " + person.quality.quality + " " + person.clothes.name + ". Your total armor rating is " + person.ArmorRating + " (" + person.clothes.name + " : " + person.clothes.baseValue + ", " + person.quality.quality + " : " + person.quality.modifierValue + ")";
+    document.querySelector(".charlevel").textContent = "Level: " + person.level.level;
+    document.querySelector(".charexp").textContent = "You have " + person.level.xp + " xp";
 }
 
-document.querySelector(".chardomizer-button").onclick = function () {
-    let generatedPerson = generatePerson();
-    displayPerson(generatedPerson);
+displayPerson(person);
+
+document.querySelector(".xp-button").onclick = function () {
+    person.level.xp = person.level.xp + 1;
+
+    for (i = 0; i < levels.length; i++) {
+        if (person.level.xp == levels[i].xp) {
+            person.level.level = levels[i].level;
+        }
+    }
+    displayPerson(person);
 }
 
-
-let clickcount = 0;
-
-function add() {
-    clickcount = clickcount + 1;
-    document.querySelector(".xp-button").value = clickcount;
-    document.title = clickcount + " Clicker";
-    console.log(clickcount);
+function xpOverTime() {
+    setInterval(function () {
+        person.level.xp = person.level.xp + 1;
+        console.log("1 xp added!");
+        displayPerson(person);
+    }, 1500);
 }
 
-function save() {
-    localStorage.setItem("clickcount", clickcount)
+// if (person.level.xp === 15) {
+//     document.querySelector(".xpgen1").onclick = xpOverTime();
+// }
+
+let xpgen1 = document.querySelector('.xpgen1');
+
+
+function allow() {
+    for (i = 0; i < generators.length; i++) {
+        if (person.level.xp == generators[i].requirement) {
+            xpOverTime();
+
+        }
+    }
 }
 
-function load() {
-    clickcount = localStorage.getItem("clickcount");
-    clickcount = parseInt(clickcount);
-    document.querySelector(".xp-button").value = clickcount;
-    document.title = clickcount + " Count";
-}
+xpgen1.onclick = allow();
+
+
+
+// function add() {
+//     person.level.xp = person.level.xp + 1;
+//     document.querySelector(".xp-button").value = person.level.xp;
+//     document.title = experience + " Clicker";
+//     console.log(person.level.xp);
+// }
+
+// function save() {
+//     localStorage.setItem("clickcount", clickcount)
+// }
+
+// function load() {
+//     clickcount = localStorage.getItem("clickcount");
+//     clickcount = parseInt(clickcount);
+//     document.querySelector(".xp-button").value = clickcount;
+//     document.title = clickcount + " Count";
+// }
+
+// function getRandom(array) {
+//     return array[Math.floor(Math.random() * array.length)];
+// }
+
+
+// function xpOverTime() {
+
+//     setInterval(xpOverTime, 1500);
+// }
