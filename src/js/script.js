@@ -1,5 +1,6 @@
-function Occupation(name) {
+function Occupation(name, xp) {
     this.name = name;
+    this.xp = xp;
 }
 
 function Clothing(name, baseValue) {
@@ -20,8 +21,9 @@ function Person() {
     this.name = faker.name.findName();
     this.occupation = new Occupation("Unemployed");
 
-    this.setOccupation = function (occupation) {
+    this.setOccupation = function (occupation, xp) {
         this.occupation = occupation;
+        this.xp = xp;
     };
 
     this.setClothes = function (clothes, baseValue) {
@@ -41,9 +43,9 @@ function Person() {
 }
 
 /* Other stuff */
-const occupations = [new Occupation("Warrior"), new Occupation("Mage"), new Occupation("Ranger")];
+const occupations = [new Occupation("Rookie", 5), new Occupation("Survivor", 10), new Occupation("Legend", 15)];
 const clothes = [new Clothing("Leather Armor", 15), new Clothing("Copper Armor", 20), new Clothing("Iron Armor", 25), new Clothing("Steel Plate Armor", 30), new Clothing("Elven Armor", 35), new Clothing("Magma Set", 40)];
-const quality = [new Quality("Poorly-Made", 10), new Quality("Common", 20), new Quality("Well-Made", 30), new Quality("Masterwork", 50), new Quality("Legendary", 80)];
+const quality = [new Quality("Poorly-Made", -10), new Quality("Common", 20), new Quality("Well-Made", 30), new Quality("Masterwork", 50), new Quality("Legendary", 80)];
 
 function getRandom(array) {
     return array[Math.floor(Math.random() * array.length)];
@@ -62,16 +64,36 @@ function generatePerson() {
     console.log(person);
 
     return person;
-
 }
 
 function displayPerson(person) {
-    document.querySelector(".charname").textContent = person.name;
-    document.querySelector(".chardesc").textContent = person.name + " is a " + person.occupation.name + ". " + "They're wearing a " + person.quality.quality + " " + person.clothes.name + ". The set's base value offers " + person.clothes.baseValue + " points of defense, with an additional " + person.quality.modifierValue + " points of defence, due to its " + person.quality.quality + " modifier." + " Your total Armor Rating (AR) is " + person.ArmorRating;
-
+    document.querySelector(".charname").textContent = "Name: " + person.name;
+    document.querySelector(".charrank").textContent = "Rank: " + person.occupation.name;
+    document.querySelector(".chararmor").textContent = "Equipped: " + person.quality.quality + " " + person.clothes.name + ". Your total armor rating is " + person.ArmorRating + " (" + person.clothes.name + " : " + person.clothes.baseValue + ", " + person.quality.quality + " : " + person.quality.modifierValue + ")";
 }
 
-document.querySelector(".boy").onclick = function () {
+document.querySelector(".chardomizer-button").onclick = function () {
     let generatedPerson = generatePerson();
     displayPerson(generatedPerson);
+}
+
+
+let clickcount = 0;
+
+function add() {
+    clickcount = clickcount + 1;
+    document.querySelector(".xp-button").value = clickcount;
+    document.title = clickcount + " Clicker";
+    console.log(clickcount);
+}
+
+function save() {
+    localStorage.setItem("clickcount", clickcount)
+}
+
+function load() {
+    clickcount = localStorage.getItem("clickcount");
+    clickcount = parseInt(clickcount);
+    document.querySelector(".xp-button").value = clickcount;
+    document.title = clickcount + " Count";
 }
