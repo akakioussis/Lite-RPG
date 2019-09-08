@@ -17,9 +17,11 @@ function ArmorRating(ArmorRating) {
     this.ArmorRating = ArmorRating;
 }
 
-function Generator(name, requirement) {
-    this.name = name;
-    this.requirement = requirement;
+function Generator(quality, pointTake, pointGive, pointInterval) {
+    this.quality = quality;
+    this.pointTake = pointTake;
+    this.pointGive = pointGive;
+    this.pointInterval = pointInterval;
 }
 
 function Person() {
@@ -27,6 +29,7 @@ function Person() {
     this.level = new Level("Unleveled", 0);
     this.clothing = new Clothing("Rags", 0);
     this.quality = new Quality("Broken", 0);
+    this.generator = new Generator("None", 0, 0, 0);
 
     this.setLevel = function (level, xp) {
         this.level = level;
@@ -47,18 +50,22 @@ function Person() {
         this.ArmorRating = ArmorRating;
     }
 
+    this.setGenerator = function (quality, pointTake, pointGive, pointInterval) {
+        this.quality = quality;
+        this.pointTake = pointTake;
+        this.pointGive = pointGive;
+        this.pointInterval = pointInterval;
+    }
 }
 
 /* Other stuff */
 const levels = [new Level("Rookie", 5), new Level("Survivor", 10), new Level("Legend", 15)];
 const clothes = [new Clothing("Leather Armor", 15), new Clothing("Copper Armor", 20), new Clothing("Iron Armor", 25), new Clothing("Steel Plate Armor", 30), new Clothing("Elven Armor", 35), new Clothing("Magma Set", 40)];
 const quality = [new Quality("Poorly-Made", -10), new Quality("Common", 20), new Quality("Well-Made", 30), new Quality("Masterwork", 50), new Quality("Legendary", 80)];
-const generators = [new Generator("Lame Generator", 15)];
+const generators = [new Generator("Lame", 5, 5, 1500), new Generator("Common", 10, 10, 1500)];
 
 let person = new Person();
-
-
-
+// let generator = new Generator();
 
 function displayPerson(person) {
     document.querySelector(".charlevel").textContent = "Level: " + person.level.level;
@@ -78,31 +85,69 @@ document.querySelector(".xp-button").onclick = function () {
     displayPerson(person);
 }
 
-function xpOverTime() {
-    setInterval(function () {
-        person.level.xp = person.level.xp + 1;
-        console.log("1 xp added!");
-        displayPerson(person);
-    }, 1500);
+function getRandom(array) {
+    return array[Math.floor(Math.random() * array.length)];
 }
+
+let xpgen1 = document.querySelector('.xpgen1');
+
+function addGenerator() {
+    let generator = new Generator();
+    for (i = 0; i < generators.length; i++) {
+        if (person.level.xp == generators[i].pointTake) {
+            person.generator = generators[i];
+        }
+    }
+    console.log(person.generator.quality);
+    return generator;
+}
+
+xpgen1.onclick = addGenerator;
+
+
+// for (i = 0; i < generators.length; i++) {
+//     if (person.level.xp >= generators[i].pointTake) {
+//         person.setGenerator(generators[0]);
+//         console.log(person.generator);
+//     }
+// }
+
+// console.log(person.generator);
+
+
+// addGenerator();
+
+
+
+// for (i = 0; i < levels.length; i++){
+//     if (person.level.xp == generators[i].pointTake) {
+
+//     }
+// }
+
+
+
+// function xpOverTime() {
+
+//     for (i = 0; i < generators.length; i++) {
+//         if (person.level.xp >= generators[i].requirement) {
+//             setInterval(function () {
+//                 person.level.xp = person.level.xp + 1;
+//                 console.log("1 xp added!");
+//                 displayPerson(person);
+//             }, 1500);
+//             person.level.xp = person.level.xp - 15;
+
+//         }
+//     }
+
+// }
+
+
 
 // if (person.level.xp === 15) {
 //     document.querySelector(".xpgen1").onclick = xpOverTime();
 // }
-
-let xpgen1 = document.querySelector('.xpgen1');
-
-
-function allow() {
-    for (i = 0; i < generators.length; i++) {
-        if (person.level.xp == generators[i].requirement) {
-            xpOverTime();
-
-        }
-    }
-}
-
-xpgen1.onclick = allow();
 
 
 
