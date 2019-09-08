@@ -91,11 +91,28 @@ function getRandom(array) {
 
 let xpgen1 = document.querySelector('.xpgen1');
 
+function xpOverTime() {
+
+    for (i = 0; i < generators.length; i++) {
+        if (person.level.xp >= generators[i].pointTake) {
+            setInterval(function () {
+                person.level.xp = person.level.xp + 1;
+                console.log("1 xp added!");
+                displayPerson(person);
+            }, 1500);
+            person.level.xp = person.level.xp - person.generator.pointTake;
+
+        }
+    }
+
+}
+
 function addGenerator() {
     let generator = new Generator();
     for (i = 0; i < generators.length; i++) {
         if (person.level.xp == generators[i].pointTake) {
             person.generator = generators[i];
+            xpOverTime();
         }
     }
     console.log(person.generator.quality);
@@ -127,21 +144,6 @@ xpgen1.onclick = addGenerator;
 
 
 
-// function xpOverTime() {
-
-//     for (i = 0; i < generators.length; i++) {
-//         if (person.level.xp >= generators[i].requirement) {
-//             setInterval(function () {
-//                 person.level.xp = person.level.xp + 1;
-//                 console.log("1 xp added!");
-//                 displayPerson(person);
-//             }, 1500);
-//             person.level.xp = person.level.xp - 15;
-
-//         }
-//     }
-
-// }
 
 
 
