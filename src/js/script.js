@@ -110,7 +110,7 @@ function xpOverTime() {
 function addGenerator() {
     let generator = new Generator();
     for (i = 0; i < generators.length; i++) {
-        if (person.level.xp == generators[i].pointTake) {
+        if (person.level.xp >= generators[i].pointTake) {
             person.generator = generators[i];
             xpOverTime();
         }
