@@ -1,6 +1,5 @@
-function Level(level, xp) {
-    this.level = level;
-    this.xp = xp;
+function Experience(experience) {
+    this.experience = experience;
 }
 
 function Clothing(name, baseValue) {
@@ -26,14 +25,13 @@ function Generator(quality, pointTake, pointGive, pointInterval) {
 
 function Person() {
     this.name = "You";
-    this.level = new Level("Unleveled", 0);
+    this.experience = new Experience(0);
     this.clothing = new Clothing("Rags", 0);
     this.quality = new Quality("Broken", 0);
     this.generator = new Generator("None", 0, 0, 0);
 
-    this.setLevel = function (level, xp) {
-        this.level = level;
-        this.xp = xp;
+    this.setExperience = function (experience) {
+        this.experience = experience;
     };
 
     this.setClothes = function (clothes, baseValue) {
@@ -59,27 +57,26 @@ function Person() {
 }
 
 /* Other stuff */
-const levels = [new Level("Rookie", 5), new Level("Survivor", 10), new Level("Legend", 15)];
+const playerxp = [new Experience(5), new Experience(10), new Experience(15)];
 const clothes = [new Clothing("Leather Armor", 15), new Clothing("Copper Armor", 20), new Clothing("Iron Armor", 25), new Clothing("Steel Plate Armor", 30), new Clothing("Elven Armor", 35), new Clothing("Magma Set", 40)];
 const quality = [new Quality("Poorly-Made", -10), new Quality("Common", 20), new Quality("Well-Made", 30), new Quality("Masterwork", 50), new Quality("Legendary", 80)];
-const generators = [new Generator("Lame", 5, 5, 1500), new Generator("Common", 10, 10, 1500)];
+const generators = [new Generator("Lame", 5, 1, 1000)];
 
 let person = new Person();
-// let generator = new Generator();
 
 function displayPerson(person) {
-    document.querySelector(".charlevel").textContent = "Level: " + person.level.level;
-    document.querySelector(".charexp").textContent = "You have " + person.level.xp + " xp";
+    document.querySelector(".charlevel").textContent = "Level: " + person.experience.experience;
+    document.querySelector(".charexp").textContent = "You have " + person.experience.experience + " xp";
 }
 
 displayPerson(person);
 
 document.querySelector(".xp-button").onclick = function () {
-    person.level.xp = person.level.xp + 1;
+    person.experience.experience = person.experience.experience + 1;
 
-    for (i = 0; i < levels.length; i++) {
-        if (person.level.xp == levels[i].xp) {
-            person.level.level = levels[i].level;
+    for (i = 0; i < playerxp.length; i++) {
+        if (person.experience.experience == playerxp[i]) {
+            person.experience.experience = playerxp[i];
         }
     }
     displayPerson(person);
@@ -94,30 +91,32 @@ let xpgen1 = document.querySelector('.xpgen1');
 function xpOverTime() {
 
     for (i = 0; i < generators.length; i++) {
-        if (person.level.xp >= generators[i].pointTake) {
+        if (person.experience.experience >= generators[i].pointTake) {
             setInterval(function () {
-                person.level.xp = person.level.xp + 1;
+                person.experience.experience = person.experience.experience + person.generator.pointGive;
                 console.log("1 xp added!");
+                console.log(person.experience.experience);
                 displayPerson(person);
-            }, 1500);
-            person.level.xp = person.level.xp - person.generator.pointTake;
-
+            }, person.generator.pointInterval);
         }
-    }
+        person.experience.experience = person.experience.experience - person.generator.pointTake;
 
+    }
 }
 
 function addGenerator() {
     let generator = new Generator();
     for (i = 0; i < generators.length; i++) {
-        if (person.level.xp >= generators[i].pointTake) {
+        if (person.experience.experience >= generators[i].pointTake) {
             person.generator = generators[i];
             xpOverTime();
         }
     }
-    console.log(person.generator.quality);
+    person.generator.pointTake = person.generator.pointTake;
+    console.log(person.experience.experience);
     return generator;
 }
+
 
 xpgen1.onclick = addGenerator;
 
