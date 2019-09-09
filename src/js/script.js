@@ -7,7 +7,7 @@ function Generator(pointTake, pointGive, pointInterval) {
 function Person() {
     this.name = "You";
     this.experience = 0;
-    this.generator = new Generator(0, 0, 0);
+    this.generator = new Generator(5, 1, 2500);
 
     this.setGenerator = function (pointTake, pointGive, pointInterval) {
         this.pointTake = pointTake;
@@ -20,7 +20,6 @@ function Person() {
 let person = new Person();
 let xpgen1 = document.querySelector('.xpgen1');
 const playerxp = person.experience;
-// const generators = new Generator();
 let ownedGenerators = [];
 
 function displayPerson(person) {
@@ -43,7 +42,18 @@ function addGenerator() {
     displayPerson(person);
 }
 
-xpgen1.onclick = addGenerator;
+function allowGenerator() {
+    if (person.experience >= person.generator.pointTake) {
+        addGenerator();
+        person.experience = person.experience - person.generator.pointTake;
+
+    }
+    displayPerson(person);
+
+}
+
+xpgen1.onclick = allowGenerator;
+
 
 
 

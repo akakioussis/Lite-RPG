@@ -4,14 +4,11 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    // background-image: linear-gradient(rgba(255, 255, 255, 0.151),
-    //         rgba(0, 0, 0, 0.836));
-    // url("../assets/img/j6AaDAF.jpg");
+
     overflow: hidden;
     font-size: 2em;
     text-align: center;
     font-family: monospace;
-
 }
 
 button {
@@ -20,32 +17,3 @@ button {
     cursor: pointer;
     border: 1px solid #111111
 }
-
-
-// .header-content {
-//     display: flex;
-//     align-items: center;
-//     height: 100%;
-// }
-
-// .left {
-//     text-transform: uppercase;
-
-// }
-
-// .middle {}
-
-// .right {
-//     background-image: url("../assets/img/weebler.jpg");
-//     background-repeat: no-repeat;
-//     background-image: center;
-//     height: 50%;
-// }
-
-// .items {
-//     padding: 55px;
-//     text-align: center;
-//     font-size: 2em;
-// }
-
-// .img {}
