@@ -27,7 +27,7 @@ function displayPlayer(player) {
     document.querySelector(".playerxp").textContent = "You have " + player.experience + " points";
     document.querySelector(".playerOwnedGen").textContent = "Point Generators: " + ownedGenerators.length;
     document.querySelector(".pointGen").textContent = "Point generator, costs: " + player.generator.pointTake;
-
+    document.title = player.experience + " points";
 }
 
 function addGenerator() {
