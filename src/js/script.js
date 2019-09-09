@@ -46,6 +46,7 @@ function allowGenerator() {
     if (person.experience >= person.generator.pointTake) {
         addGenerator();
         person.experience = person.experience - person.generator.pointTake;
+        person.generator.pointTake = person.generator.pointTake + 1;
 
     }
     displayPerson(person);
