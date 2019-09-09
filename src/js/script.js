@@ -70,6 +70,8 @@ setInterval(displayPlayer, 100, player);
 
 
 
+
+
 ////////////////////////////////////////////
 
 //optional
