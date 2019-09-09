@@ -99,13 +99,14 @@ function xpOverTime() {
         if (person.experience.experience >= generators[i].pointTake) {
             setInterval(function () {
                 person.experience.experience = person.experience.experience + person.generator.pointGive;
-                console.log("1 xp added!");
+                // console.log("1 xp added!");
                 console.log(person.experience.experience);
                 displayPerson(person);
 
             }, person.generator.pointInterval);
         }
         person.experience.experience = person.experience.experience - person.generator.pointTake;
+        console.log("-" + person.generator.pointTake + " for");
     }
     return ownedGenerators = ownedGenerators + 1;
 }
