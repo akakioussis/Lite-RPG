@@ -32,7 +32,6 @@ function displayPlayer(player) {
 
 function addGenerator() {
     let objectGenerator = new Generator();
-    console.log(player.generator);
     ownedGenerators.push(objectGenerator);
     displayPlayer(player);
 }
@@ -65,36 +64,3 @@ document.querySelector(".pointClick").onclick = function () {
 }
 
 setInterval(displayPlayer, 100, player);
-
-
-
-
-
-
-
-////////////////////////////////////////////
-
-//optional
-
-
-// function defineGenerator(pointTake, pointGive, pointInterval) {
-//     // let pointTake = person.generator.pointTake;
-//     // let pointGive = person.generator.pointGive;
-//     // let pointInterval = person.generator.pointInterval;
-
-//     pointTake = person.experience - person.generator.pointTake;;
-//     pointGive = person.generator.pointTake + 1;
-//     pointInterval = 1000;
-
-//     return pointTake, pointGive, pointInterval;
-// }
-
-// function allowGenerator() {
-//     if (person.experience >= person.generator.pointTake) {
-//         addGenerator();
-//         setInterval(defineGenerator, 1000, 5, 1);
-//     }
-//     displayPerson(person);
-// }
-
-// xpgen1.onclick = allowGenerator;
