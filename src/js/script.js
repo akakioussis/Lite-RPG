@@ -19,7 +19,6 @@ let ownedGenerators = [];
 let pointGen = document.querySelector('.pointGen');
 pointGen.onclick = allowGenerator;
 
-
 /* Functions */
 
 function displayPlayer(player) {
@@ -36,12 +35,10 @@ function addGenerator() {
     displayPlayer(player);
 }
 
-
 function defineGenerator() {
     player.experience = player.experience - player.generator.pointTake;
     player.generator.pointTake = player.generator.pointTake + 1;
 }
-
 
 function runGenerator() {
     player.experience = player.experience + 1;
@@ -53,7 +50,6 @@ function allowGenerator() {
         defineGenerator();
         setInterval(runGenerator, 1000);
         return pointsPerSec += 1;
-
     }
     displayPlayer(player);
 }
