@@ -57,16 +57,20 @@ function Person() {
 }
 
 /* Other stuff */
+let ownedGenerators = 0;
 const playerxp = [new Experience(5), new Experience(10), new Experience(15)];
 const clothes = [new Clothing("Leather Armor", 15), new Clothing("Copper Armor", 20), new Clothing("Iron Armor", 25), new Clothing("Steel Plate Armor", 30), new Clothing("Elven Armor", 35), new Clothing("Magma Set", 40)];
 const quality = [new Quality("Poorly-Made", -10), new Quality("Common", 20), new Quality("Well-Made", 30), new Quality("Masterwork", 50), new Quality("Legendary", 80)];
-const generators = [new Generator("Lame", 5, 1, 1000)];
+const generators = [new Generator("Lame", ownedGenerators + 5, 1, 3000)];
+
+let xpgen1 = document.querySelector('.xpgen1');
 
 let person = new Person();
 
 function displayPerson(person) {
-    document.querySelector(".charlevel").textContent = "Level: " + person.experience.experience;
+    document.querySelector(".charlevel").textContent = "Experience: " + person.experience.experience;
     document.querySelector(".charexp").textContent = "You have " + person.experience.experience + " xp";
+    document.querySelector(".chargenerators").textContent = "XP Generators: " + ownedGenerators;
 }
 
 displayPerson(person);
@@ -86,22 +90,24 @@ function getRandom(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-let xpgen1 = document.querySelector('.xpgen1');
 
 function xpOverTime() {
 
     for (i = 0; i < generators.length; i++) {
+        person.generator.pointTake = person.generator.pointTake + ownedGenerators;
+        // person.generator.pointTake = person.generator.pointTake + ownedGenerators;
         if (person.experience.experience >= generators[i].pointTake) {
             setInterval(function () {
                 person.experience.experience = person.experience.experience + person.generator.pointGive;
                 console.log("1 xp added!");
                 console.log(person.experience.experience);
                 displayPerson(person);
+
             }, person.generator.pointInterval);
         }
         person.experience.experience = person.experience.experience - person.generator.pointTake;
-
     }
+    return ownedGenerators = ownedGenerators + 1;
 }
 
 function addGenerator() {
@@ -112,11 +118,10 @@ function addGenerator() {
             xpOverTime();
         }
     }
-    person.generator.pointTake = person.generator.pointTake;
     console.log(person.experience.experience);
+    displayPerson(person);
     return generator;
 }
-
 
 xpgen1.onclick = addGenerator;
 
