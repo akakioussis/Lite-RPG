@@ -7,13 +7,7 @@ function Generator(pointTake, pointGive, pointInterval) {
 function Person() {
     this.name = "You";
     this.experience = 0;
-    this.generator = new Generator(5, 1, 2500);
-
-    this.setGenerator = function (pointTake, pointGive, pointInterval) {
-        this.pointTake = pointTake;
-        this.pointGive = pointGive;
-        this.pointInterval = pointInterval;
-    }
+    this.generator = new Generator(5, 1, 1250);
 }
 
 /* Other stuff */
@@ -23,7 +17,7 @@ const playerxp = person.experience;
 let ownedGenerators = [];
 
 function displayPerson(person) {
-    document.querySelector(".charlevel").textContent = "Experience: " + person.experience;
+    document.querySelector(".charlevel").textContent = "Total experience earned: " + person.experience;
     document.querySelector(".charexp").textContent = "You have " + person.experience + " xp";
     document.querySelector(".chargenerators").textContent = "XP Generators: " + ownedGenerators.length;
 }
@@ -35,6 +29,8 @@ document.querySelector(".xp-button").onclick = function () {
     displayPerson(person);
 }
 
+
+
 function addGenerator() {
     let objectGenerator = new Generator();
     console.log(person.generator);
@@ -42,62 +38,55 @@ function addGenerator() {
     displayPerson(person);
 }
 
+function defineGenerator() {
+    person.experience = person.experience - person.generator.pointTake;
+    person.generator.pointTake = person.generator.pointTake + 1;
+}
+
+function runGenerator() {
+    person.experience = person.experience + 1;
+}
+
+setInterval(displayPerson, 100, person);
+
 function allowGenerator() {
     if (person.experience >= person.generator.pointTake) {
         addGenerator();
-        person.experience = person.experience - person.generator.pointTake;
-        person.generator.pointTake = person.generator.pointTake + 1;
+        defineGenerator();
+        setInterval(runGenerator, 2000);
 
     }
     displayPerson(person);
-
 }
 
 xpgen1.onclick = allowGenerator;
 
 
 
+//optional
 
-// document.querySelector(".xp-button").onclick = function () {
-//     person.experience.experience = person.experience.experience + 1;
 
-//     for (i = 0; i < playerxp.length; i++) {
-//         if (person.experience.experience == playerxp[i]) {
-//             person.experience.experience = playerxp[i];
-//         }
+
+
+
+// function defineGenerator(pointTake, pointGive, pointInterval) {
+//     // let pointTake = person.generator.pointTake;
+//     // let pointGive = person.generator.pointGive;
+//     // let pointInterval = person.generator.pointInterval;
+
+//     pointTake = person.experience - person.generator.pointTake;;
+//     pointGive = person.generator.pointTake + 1;
+//     pointInterval = 1000;
+
+//     return pointTake, pointGive, pointInterval;
+// }
+
+// function allowGenerator() {
+//     if (person.experience >= person.generator.pointTake) {
+//         addGenerator();
+//         setInterval(defineGenerator, 1000, 5, 1);
 //     }
 //     displayPerson(person);
 // }
 
-// function xpOverTime() {
-
-//     for (i = 0; i < generators.length; i++) {
-//         person.generator.pointTake = person.generator.pointTake + ownedGenerators;
-//         if (person.experience.experience >= person.generator.pointTake) {
-//             setInterval(function () {
-//                 person.experience.experience = person.experience.experience + person.generator.pointGive;
-//                 console.log(person.experience.experience);
-//                 displayPerson(person);
-
-//             }, person.generator.pointInterval);
-//         }
-//         person.experience.experience = person.experience.experience - person.generator.pointTake;
-//         console.log("-" + person.generator.pointTake + " for");
-//     }
-//     return ownedGenerators = +1;
-// }
-
-// function addGenerator() {
-//     let generator = new Generator();
-//     for (i = 0; i < generators.length; i++) {
-//         if (person.experience.experience >= generators[i].pointTake) {
-//             person.generator = generators[i];
-//             xpOverTime();
-//         }
-//     }
-//     console.log(person.experience.experience);
-//     displayPerson(person);
-//     return generator;
-// }
-
-// xpgen1.onclick = addGenerator;
+// xpgen1.onclick = allowGenerator;
