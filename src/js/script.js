@@ -9,7 +9,7 @@ function Generator(pointTake, pointGive, pointInterval) {
 function Player() {
     this.name = "You";
     this.experience = 0;
-    this.generator = new Generator(5, 1, 1250);
+    this.generator = new Generator(5, 1, 1000);
 }
 
 /* Global variables */
@@ -51,7 +51,7 @@ function allowGenerator() {
     if (player.experience >= player.generator.pointTake) {
         addGenerator();
         defineGenerator();
-        setInterval(runGenerator, 2000);
+        setInterval(runGenerator, 1000);
         return pointsPerSec += 1;
 
     }
