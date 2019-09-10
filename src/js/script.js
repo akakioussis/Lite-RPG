@@ -13,10 +13,11 @@ function Player() {
 }
 
 /* Global variables */
+
 let player = new Player();
 let pointsPerSec = 0;
 let ownedGenerators = [];
-let pointGen = document.querySelector('.pointGen');
+let pointGen = document.querySelector('.pointGen1');
 pointGen.onclick = allowGenerator;
 
 /* Functions */
@@ -25,7 +26,7 @@ function displayPlayer(player) {
     document.querySelector(".playerPPS").textContent = "Points/sec: " + pointsPerSec;
     document.querySelector(".playerxp").textContent = "You have " + player.experience + " points";
     document.querySelector(".playerOwnedGen").textContent = "Point Generators: " + ownedGenerators.length;
-    document.querySelector(".pointGen").textContent = "Point generator, costs: " + player.generator.pointTake;
+    document.querySelector(".pointGen1").textContent = "Point generator, costs: " + player.generator.pointTake;
     document.title = player.experience + " points";
 }
 
